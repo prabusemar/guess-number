@@ -1,40 +1,47 @@
 // Mendapatkan jawaban berupa angka acak antara 1 dan 10
-const randomNumber = Math.floor(Math.random() * 10) + 1;
-console.log(randomNumber); // Tampilkan angka acak pada konsol untuk keperluan debug
+// Membangkitkan angka acak antara 1 dan 10
+const nomorAcak = Math.floor(Math.random() * 10) + 1;
+console.log(nomorAcak); // Tampilkan angka acak pada konsol untuk keperluan debug
 
 // Mengambil elemen input tebakan
-const guessInput = document.getElementById('guessInput');
+const tebakanInput = document.getElementById('tebakanInput');
 
 // Mengambil elemen untuk menampilkan pesan
-const message = document.getElementById('message');
+const pesan = document.getElementById('pesan');
 
-// Menginisialisasi jumlah percobaan
-let attempts = 3;
+// Menentukan jumlah percobaan
+let kesempatan = 3;
 
 // Fungsi untuk memeriksa tebakan
-function checkGuess() {
+function cekTebakan() {
     // Mendapatkan tebakan pengguna
-    const userGuess = parseInt(guessInput.value);
+    const tebakan = parseInt(tebakanInput.value);
 
     // Memeriksa apakah tebakan benar
-    if (userGuess === randomNumber) {
-        message.textContent = `Selamat! Anda menebak dengan benar. Angka yang dicari adalah ${randomNumber}.`;
-        message.style.color = 'green';
-        guessInput.disabled = true; // Menonaktifkan input setelah tebakan benar
+    if (tebakan === nomorAcak) {
+        // Pesan untuk tebakan yang benar
+        pesan.textContent = `Selamat! Anda menebak dengan benar. Angka yang dicari adalah ${nomorAcak}.`;
+        pesan.style.color = 'green';
+        tebakanInput.disabled = true; // Menonaktifkan input setelah tebakan benar
     } else {
         // Memberikan clue apakah angka yang ditebak terlalu tinggi atau terlalu rendah
-        const clue = userGuess < randomNumber ? 'terlalu rendah' : 'terlalu tinggi';
+        const clue = tebakan < nomorAcak ? 'terlalu rendah' : 'terlalu tinggi';
         
-        attempts--;
-        if (attempts === 0) {
-            message.textContent = `Game Over! Angka yang benar adalah ${randomNumber}.`;
-            message.style.color = 'red';
-            guessInput.disabled = true; // Menonaktifkan input setelah habis percobaan
+        // Mengurangi jumlah kesempatan
+        kesempatan--;
+
+        // Memeriksa apakah permainan berakhir
+        if (kesempatan === 0) {
+            // Pesan jika permainan berakhir
+            pesan.textContent = `Game Over! Angka yang benar adalah ${nomorAcak}.`;
+            pesan.style.color = 'red';
+            tebakanInput.disabled = true; // Menonaktifkan input setelah habis percobaan
         } else {
-            message.textContent = `Tebakan salah. Angka yang Anda masukkan ${clue}. Anda memiliki ${attempts} kesempatan lagi.`;
-            message.style.color = 'red';
+            // Pesan jika ketika masih ada kesempatan tebakan salah akan memberikan clue
+            pesan.textContent = `Tebakan salah. Angka yang Anda masukkan ${clue}. Anda memiliki ${kesempatan} kesempatan lagi.`;
+            pesan.style.color = 'red';
         }
     }
     // Mengosongkan input
-    guessInput.value = '';
+    tebakanInput.value = '';
 }
